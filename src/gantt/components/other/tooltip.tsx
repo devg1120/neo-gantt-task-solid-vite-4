@@ -109,14 +109,13 @@ export const Tooltip: Component<TooltipProps> = ({
                     ? styles.tooltipDetailsContainer
                     : styles.tooltipDetailsContainerHidden
             }
-            style={{
-                get left() { return relatedX() },
-                get top() { return relatedY() }
-            }}
+ 		style={{ left: relatedX, top: relatedY }}
+
         >
             <TooltipContent task={task} fontSize={fontSize} fontFamily={fontFamily} />
         </div>
     );
+
 };
 
 export const StandardTooltipContent: Component<{
@@ -128,6 +127,8 @@ export const StandardTooltipContent: Component<{
         fontSize,
         fontFamily,
     };
+    return (<></>);
+{/*
     return (
         <div class={styles.tooltipDefaultContainer} style={style}>
             <b style={{ get fontSize() { return fontSize + 6 } }}>{`${task.name
@@ -146,4 +147,5 @@ export const StandardTooltipContent: Component<{
             </p>
         </div>
     );
+*/}
 };

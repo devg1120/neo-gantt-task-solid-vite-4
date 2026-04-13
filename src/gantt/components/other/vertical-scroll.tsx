@@ -17,6 +17,7 @@ export const VerticalScroll: Component<{
     rtl,
     onScroll,
 }) => {
+
         const scrollRef = useRef<HTMLDivElement>(null);
 
         createEffect(on(
@@ -27,7 +28,25 @@ export const VerticalScroll: Component<{
                 }
             }
         ));
+        return (
+            <div
+                style={{
+                    height: ganttHeight,
+                    marginTop: headerHeight,
+ 	 	    marginLeft: rtl ? "" : "-1rem",
+                }}
+                class={styles.scroll}
+                onScroll={onScroll}
+                ref={scrollRef}
+            >
+                <div style={{
+                    height: ganttFullHeight,
+                    width: 1
+                }} />
+            </div>
+        );
 
+{/*
         return (
             <div
                 style={{
@@ -45,4 +64,5 @@ export const VerticalScroll: Component<{
                 }} />
             </div>
         );
+	*/}
     };

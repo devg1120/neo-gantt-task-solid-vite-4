@@ -1,5 +1,7 @@
 import styles from "./horizontal-scroll.module.css";
 import { createEffect, on } from "solid-js";
+import type { Component } from 'solid-js';
+
 
 export const HorizontalScroll: Component<{
     scroll: number;
@@ -22,6 +24,24 @@ export const HorizontalScroll: Component<{
     return (
         <div
             dir="ltr"
+			style={{
+				margin: rtl
+					? `0px ${taskListWidth}px 0px 0px`
+					: `0px 0px 0px ${taskListWidth}px`,
+			}}
+            class={styles.scrollWrapper}
+            onScroll={onScroll}
+            ref={scrollRef}
+        >
+            <div style={{ width: svgWidth }} class={styles.scroll} />
+        </div>
+    );
+
+
+{/*
+    return (
+        <div
+            dir="ltr"
             style={{
                 get margin() {
                     return rtl
@@ -36,4 +56,6 @@ export const HorizontalScroll: Component<{
             <div style={{ width: svgWidth }} class={styles.scroll} />
         </div>
     );
+
+*/}
 };
