@@ -1,5 +1,5 @@
-import { TaskListHeaderProps } from "../components/task-list/task-list-header";
-import { TaskListTableProps } from "../components/task-list/task-list-table";
+import type { TaskListHeaderProps } from "../components/task-list/task-list-header";
+import type { TaskListTableProps } from "../components/task-list/task-list-table";
 import type { Component } from 'solid-js';
 
 export enum ViewModeEnum {

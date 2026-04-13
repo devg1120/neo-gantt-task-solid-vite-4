@@ -1,4 +1,4 @@
-import { Task } from "../../types/public-types";
+import type { Task } from "../../types/public-types";
 import styles from "./task-list-table.module.css";
 import { createMemo } from "solid-js";
 
