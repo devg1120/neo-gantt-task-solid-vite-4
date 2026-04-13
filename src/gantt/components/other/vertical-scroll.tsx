@@ -1,5 +1,6 @@
 import styles from "./vertical-scroll.module.css";
 import { createEffect, on } from "solid-js";
+import type { Component } from 'solid-js';
 
 export const VerticalScroll: Component<{
     scroll: number;

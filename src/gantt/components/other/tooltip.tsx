@@ -2,6 +2,7 @@ import { BarTask } from "../../types/bar-task";
 import { Task } from "../../types/public-types";
 import styles from "./tooltip.module.css";
 import { createEffect, on, createSignal } from "solid-js";
+import type { Component} from 'solid-js';
 
 export type TooltipProps = {
     task: BarTask;
