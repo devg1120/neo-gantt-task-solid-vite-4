@@ -39,7 +39,8 @@ export const Tooltip: Component<TooltipProps> = ({
     taskListWidth,
     TooltipContent,
 }) => {
-    const tooltipRef = useRef<HTMLDivElement | null>(null);
+    //const tooltipRef = useRef<HTMLDivElement | null>(null);
+    let tooltipRef :HTMLDivElement;
     const [relatedY, setRelatedY] = createSignal(0);
     const [relatedX, setRelatedX] = createSignal(0);
     createEffect(on(

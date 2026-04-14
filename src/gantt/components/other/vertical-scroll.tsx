@@ -18,7 +18,8 @@ export const VerticalScroll: Component<{
     onScroll,
 }) => {
 
-        const scrollRef = useRef<HTMLDivElement>(null);
+        //const scrollRef = useRef<HTMLDivElement>(null);
+        let scrollRef :HTMLDivElement;
 
         createEffect(on(
             () => [scroll],

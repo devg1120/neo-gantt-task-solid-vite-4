@@ -43,7 +43,8 @@ export const TaskList: Component<TaskListProps> = ({
     TaskListTable,
     showFromTo,
 }) => {
-    const horizontalContainerRef = useRef<HTMLDivElement>(null);
+    //const horizontalContainerRef = useRef<HTMLDivElement>(null);
+    let horizontalContainerRef :HTMLDivElement;
     createEffect(on(
         () => [scrollY],
         () => {

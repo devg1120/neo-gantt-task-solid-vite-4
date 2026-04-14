@@ -35,7 +35,8 @@ export const TaskItem: Component<TaskItemProps> = (props) => {
     } = {
         ...props,
     };
-    const textRef = useRef<SVGTextElement>(null);
+    //const textRef = useRef<SVGTextElement>(null);
+    let textRef :SVGTextElement;
     const [taskItem, setTaskItem] = createSignal<JSX.Element>(<div />);
     const [isTextInside, setIsTextInside] = createSignal(true);
 

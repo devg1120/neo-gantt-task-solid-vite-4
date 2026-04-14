@@ -21,9 +21,13 @@ export const TaskGantt: Component<TaskGanttProps> = ({
     scrollY,
     scrollX,
 }) => {
-    const ganttSVGRef = useRef<SVGSVGElement>(null);
-    const horizontalContainerRef = useRef<HTMLDivElement>(null);
-    const verticalGanttContainerRef = useRef<HTMLDivElement>(null);
+    //const ganttSVGRef = useRef<SVGSVGElement>(null);
+    //const horizontalContainerRef = useRef<HTMLDivElement>(null);
+    //const verticalGanttContainerRef = useRef<HTMLDivElement>(null);
+    let ganttSVGRef :SVGSVGElement;
+    let horizontalContainerRef :HTMLDivElement;
+    let verticalGanttContainerRef :HTMLDivElement;
+
     const newBarProps = { ...barProps, svg: ganttSVGRef };
 
     createEffect(on(

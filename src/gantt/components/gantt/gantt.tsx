@@ -96,8 +96,11 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         return defaultDates;
     };
 
-    const wrapperRef = useRef<HTMLDivElement>(null);
-    const taskListRef = useRef<HTMLDivElement>(null);
+    //const wrapperRef = useRef<HTMLDivElement>(null);
+    //const taskListRef = useRef<HTMLDivElement>(null);
+    let wrapperRef :HTMLDivElement;
+    let taskListRef :HTMLDivElement;
+
     const [dateSetup, setDateSetup] = useState<DateSetup>(() => {
         if (!tasks || tasks.length === 0) {
             return { viewMode: ViewModeEnum.Day, dates: createDefaultDates() };
