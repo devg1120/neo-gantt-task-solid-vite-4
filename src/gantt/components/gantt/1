@@ -1,4 +1,4 @@
-import { createSignal , createMemo,  createEffect} from 'solid-js';
+import { createSignal } from 'solid-js';
 
 import { convertToBarTasks } from "../../helpers/bar-helper";
 import { ganttDateRange, seedDates } from "../../helpers/date-helper";
@@ -115,44 +115,41 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         undefined,
     );
 
-    const [taskListWidth, setTaskListWidth] = createSignal(0);
-    const [svgContainerWidth, setSvgContainerWidth] = createSignal(0);
-    const [svgContainerHeight, setSvgContainerHeight] = createSignal(ganttHeight);
-    const [barTasks, setBarTasks] = createSignal<BarTask[]>([]);
-    const [ganttEvent, setGanttEvent] = createSignal<GanttEvent>({
+    const [taskListWidth, setTaskListWidth] = useState(0);
+    const [svgContainerWidth, setSvgContainerWidth] = useState(0);
+    const [svgContainerHeight, setSvgContainerHeight] = useState(ganttHeight);
+    const [barTasks, setBarTasks] = useState<BarTask[]>([]);
+    const [ganttEvent, setGanttEvent] = useState<GanttEvent>({
         action: "",
     });
-    const taskHeight = createMemo(
+    const taskHeight = useMemo(
         () => (rowHeight * barFill) / 100,
         [rowHeight, barFill],
     );
 
-    const [selectedTask, setSelectedTask] = createSignal<BarTask>();
-    const [failedTask, setFailedTask] = createSignal<BarTask | null>(null);
+    const [selectedTask, setSelectedTask] = useState<BarTask>();
+    const [failedTask, setFailedTask] = useState<BarTask | null>(null);
 
-    //console.log(dateSetup());
-
-    //const svgWidth = dateSetup.dates.length * columnWidth;
-    const svgWidth = dateSetup()().dates.length * columnWidth;
+    const svgWidth = dateSetup.dates.length * columnWidth;
     const ganttFullHeight = barTasks.length * rowHeight;
 
-    const [scrollY, setScrollY] = createSignal(0);
-    const [scrollX, setScrollX] = createSignal(-1);
+    const [scrollY, setScrollY] = useState(0);
+    const [scrollX, setScrollX] = useState(-1);
 
-    const [syncScrollX_OLD, setSyncScrollX_OLD] = createSignal(0);
-    const [syncScrollY_OLD, setSyncScrollY_OLD] = createSignal(0);
+    const [syncScrollX_OLD, setSyncScrollX_OLD] = useState(0);
+    const [syncScrollY_OLD, setSyncScrollY_OLD] = useState(0);
 
-    const [ignoreScrollEvent, setIgnoreScrollEvent] = createSignal(false);
+    const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
-    const [keyDownScrollEvent, setKeyDownScrollEvent] = createSignal(false);
+    const [keyDownScrollEvent, setKeyDownScrollEvent] = useState(false);
 
-    const [ignoreSyncScrollXEvent, setIgnoreSyncScrollXEvent] = createSignal(false);
-    const [ignoreSyncScrollYEvent, setIgnoreSyncScrollYEvent] = createSignal(false);
+    const [ignoreSyncScrollXEvent, setIgnoreSyncScrollXEvent] = useState(false);
+    const [ignoreSyncScrollYEvent, setIgnoreSyncScrollYEvent] = useState(false);
 
 
 
     // task change events
-    createEffect(() => {
+    useEffect(() => {
         if (!tasks || tasks.length === 0) {
             setSvgContainerHeight(headerHeight);
             return;
@@ -228,7 +225,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         headerHeight,
     ]);
 
-    createEffect(() => {
+    useEffect(() => {
         if (
             viewMode === dateSetup.viewMode &&
             ((viewDate && !currentViewDate) ||
@@ -256,7 +253,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         currentViewDate,
     ]);
 
-    createEffect(() => {
+    useEffect(() => {
         const { changedTask, action } = ganttEvent;
         if (changedTask) {
             if (action === "delete") {
@@ -285,7 +282,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         }
     }, [ganttEvent, barTasks]);
 
-    createEffect(() => {
+    useEffect(() => {
         if (failedTask) {
             setBarTasks(
                 barTasks.map((t) => (t.id !== failedTask.id ? t : failedTask)),
@@ -294,7 +291,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         }
     }, [failedTask, barTasks]);
 
-    createEffect(() => {
+    useEffect(() => {
         if (!listCellWidth) {
             setTaskListWidth(0);
         }
@@ -303,13 +300,13 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         }
     }, [listCellWidth]);
 
-    createEffect(() => {
+    useEffect(() => {
         if (wrapperRef.current) {
             setSvgContainerWidth(wrapperRef.current.offsetWidth - taskListWidth);
         }
     }, [taskListWidth]);
 
-    createEffect(() => {
+    useEffect(() => {
         if (barTasks.length === 0) {
             setSvgContainerHeight(headerHeight);
         } else if (ganttHeight) {
@@ -320,7 +317,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     }, [ganttHeight, tasks, headerHeight, rowHeight, barTasks.length]);
 
     // scroll events
-    createEffect(() => {
+    useEffect(() => {
         const handleWheel = (event: WheelEvent) => {
             if (event.shiftKey || event.deltaX) {
                 const scrollMove = event.deltaX ? event.deltaX : event.deltaY;
@@ -357,7 +354,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         };
     }, [scrollY, scrollX, ganttHeight, svgWidth, ganttFullHeight]);
 
-    createEffect(() => {
+    useEffect(() => {
         //console.log("scrollY")
         if (onScrollY) {
             //onScrollY(scrollY)
@@ -365,7 +362,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         }
     }, [scrollY]);
 
-    createEffect(() => {
+    useEffect(() => {
         //console.log("scrollX")
         if (onScrollX) {
             //onScrollX(scrollX)
@@ -373,7 +370,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
         }
     }, [scrollX]);
 
-    createEffect(() => {
+    useEffect(() => {
         console.log("syncScrollX", syncScrollX)
         if (!syncScrollX) { return; }
         if (syncScrollX.sid == id) { return; }
@@ -407,7 +404,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
 
     }, [syncScrollX]);
 
-    createEffect(() => {
+    useEffect(() => {
         //console.log("syncScrollY")
         if (!syncScrollY) { return; }
         if (syncScrollY.sid == id) { return; }
