@@ -3,8 +3,8 @@ import { isKeyboardEvent } from "../../helpers/other-helper";
 import type { BarTask } from "../../types/bar-task";
 import type { BarMoveAction, GanttContentMoveAction, GanttEvent } from "../../types/gantt-task-actions";
 import type { EventOption } from "../../types/public-types";
-import type { Arrow } from "../other/arrow";
-import type { TaskItem } from "../task-item/task-item";
+import { Arrow } from "../other/arrow";
+import { TaskItem } from "../task-item/task-item";
 import { createEffect, on, createSignal } from "solid-js";
 
 export type TaskGanttContentProps = {
@@ -31,7 +31,7 @@ export type TaskGanttContentProps = {
 export const TaskGanttContent: Component<TaskGanttContentProps> = ({
     tasks,
     dates,
-    ganttEvent,
+    __ganttEvent,
     selectedTask,
     rowHeight,
     columnWidth,
@@ -53,7 +53,7 @@ export const TaskGanttContent: Component<TaskGanttContentProps> = ({
     onDelete,
 }) => {
 
-   //console.log("tasks", tasks);
+   //console.log("ganttEvent", __ganttEvent);
     const point = svg?.current?.createSVGPoint();
     const [xStep, setXStep] = createSignal(0);
     const [initEventX1Delta, setInitEventX1Delta] = createSignal(0);
@@ -76,7 +76,7 @@ export const TaskGanttContent: Component<TaskGanttContentProps> = ({
 
     createEffect(on(
         () => [
-            ganttEvent,
+            __ganttEvent,
             xStep(),
             initEventX1Delta(),
             onProgressChange,
@@ -184,10 +184,10 @@ export const TaskGanttContent: Component<TaskGanttContentProps> = ({
 
             if (
                 !isMoving() &&
-                (ganttEvent.action === "move" ||
-                    ganttEvent.action === "end" ||
-                    ganttEvent.action === "start" ||
-                    ganttEvent.action === "progress") &&
+                (__ganttEvent().action === "move" ||
+                    __ganttEvent().action === "end" ||
+                    __ganttEvent().action === "start" ||
+                    __ganttEvent().action === "progress") &&
                 svg?.current
             ) {
                 svg.current.addEventListener("mousemove", handleMouseMove);
@@ -273,7 +273,7 @@ export const TaskGanttContent: Component<TaskGanttContentProps> = ({
                         return (
                             <Arrow
                                 taskFrom={task}
-                                taskTo={tasks[child.index]}
+                                taskTo={tasks()[child.index]}
                                 rowHeight={rowHeight}
                                 taskHeight={taskHeight}
                                 arrowIndent={arrowIndent}
@@ -283,7 +283,7 @@ export const TaskGanttContent: Component<TaskGanttContentProps> = ({
                     });
                 })}
             </g>
-            <g class="bar" fontFamily={fontFamily} fontSize={fontSize}>
+            <g class="bar" font-family={fontFamily} font-size={fontSize}>
                 {tasks().map((task) => {
                     return (
                         <TaskItem

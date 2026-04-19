@@ -18,7 +18,7 @@ export type CalendarProps = {
 };
 
 export const Calendar: Component<CalendarProps> = ({
-    dateSetup,
+    __dateSetup,
     locale,
     viewMode,
     rtl,
@@ -223,7 +223,7 @@ export const Calendar: Component<CalendarProps> = ({
         //const topDefaultHeight = headerHeight * 0.5;
         const topDefaultHeight = headerHeight * 0.35; //GUSA
         //const dates = dateSetup.dates;
-        const dates = dateSetup()()['dates']; //GUSA
+        const dates = __dateSetup()()['dates']; //GUSA
         for (let i = 0; i < dates.length; i++) {
             const date = dates[i];
             const week = date.getDay();
@@ -430,9 +430,13 @@ export const Calendar: Component<CalendarProps> = ({
     let midValues: JSXElement[] = [];
     let bottomValues: JSXElement[] = [];
     //console.log(">>",dateSetup()()['viewMode']);
+    //console.log(">>",dateSetup()()['dates']);
+    //console.log(">>",dateSetup()().viewMode);
+    //console.log(">>",dateSetup()().dates.length);
+    let dates_length:number = __dateSetup()().dates.length;
 
     //switch (dateSetup.viewMode) {
-    switch (dateSetup()()['viewMode']) {   //GUSA
+    switch (__dateSetup()()['viewMode']) {   //GUSA
         case ViewModeEnum.Year:
             [topValues, bottomValues] = getCalendarValuesForYear();
             break;
@@ -446,6 +450,7 @@ export const Calendar: Component<CalendarProps> = ({
             [topValues, bottomValues] = getCalendarValuesForWeek();
             break;
         case ViewModeEnum.Day:
+	     console.log("Day");
             [topValues, midValues, bottomValues] = getCalendarValuesForDay();
             break;
         case ViewModeEnum.QuarterDay:
@@ -455,16 +460,72 @@ export const Calendar: Component<CalendarProps> = ({
         case ViewModeEnum.Hour:
             [topValues, bottomValues] = getCalendarValuesForHour();
     }
+/*
+return (
+<g>
+  <circle cx="30" cy="20" r="10" stroke="cyan" fill="red"/>
+  <circle cx="50" cy="20" r="10" stroke="black" fill="none"/>
+  <circle cx="70" cy="20" r="10" stroke="red" fill="none"/>
+  <circle cx="40" cy="37.32" r="10" stroke="yellow" fill="none"/>
+  <circle cx="60" cy="37.32" r="10" stroke="green" fill="none"/>
+</g>
+)
+*/
+
+//console.log(bottomValues);
+/*
+	     <text y="60.9" x="25" class="_calendarBottomText_1idyk_1" fill="black" font-size="10" >火</text>
+	     <text y="60.9" x="25"  fill="black" font-size="10" >火</text>
+
+*/
+/*
     return (
-        <g class="calendar" fontSize={fontSize} fontFamily={fontFamily}>
+        <g class="calendar" font-size={fontSize} font-family={fontFamily}>
             <rect
                 x={0}
                 y={0}
-                width={columnWidth * dateSetup()().dates.length}   /*GUSA*/
+                width={columnWidth * dates_length}   
+                height={headerHeight}
+                class={styles.calendarHeader}
+            />
+             <circle cx="30" cy="20" r="10" stroke="cyan" fill="red"/>
+
+	     <text y="60.9" x="25" class="_calendarBottomText_1idyk_1"  >火</text>
+	     <text y="60.9" x="75"  fill="black" font-size="10" >水</text>
+	     <text y="60.9" x="125" fill="black" font-size="10" >木</text>
+
+            <text x="10" y="40" font-family="Arial" font-size="24" fill="black">
+              Hello SVG
+            </text>
+        </g>
+    );
+*/
+    return (
+        <g class="calendar" font-size={fontSize} font-family={fontFamily}>
+            <rect
+                x={0}
+                y={0}
+                width={columnWidth * dates_length}   
                 height={headerHeight}
                 class={styles.calendarHeader}
             />
             {bottomValues} {topValues} {midValues}
         </g>
     );
+
+
+ /*
+    return (
+        <g class="calendar" fontSize={fontSize} fontFamily={fontFamily}>
+            <rect
+                x={0}
+                y={0}
+                width={columnWidth * dates_length}   
+                height={headerHeight}
+                class={styles.calendarHeader}
+            />
+            {bottomValues} {topValues} {midValues}
+        </g>
+    );
+*/
 };

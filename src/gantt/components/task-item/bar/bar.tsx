@@ -1,8 +1,8 @@
 import { getProgressPoint } from "../../../helpers/bar-helper";
 import type { TaskItemProps } from "../task-item";
-import type { BarDateHandle } from "./bar-date-handle";
-import type { BarDisplay } from "./bar-display";
-import type { BarProgressHandle } from "./bar-progress-handle";
+import { BarDateHandle } from "./bar-date-handle";
+import { BarDisplay } from "./bar-display";
+import { BarProgressHandle } from "./bar-progress-handle";
 import styles from "./bar.module.css";
 
 export const Bar: Component<TaskItemProps> = ({

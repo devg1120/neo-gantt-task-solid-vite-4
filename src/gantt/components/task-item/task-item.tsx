@@ -1,9 +1,9 @@
 import type { BarTask } from "../../types/bar-task";
 import type { GanttContentMoveAction } from "../../types/gantt-task-actions";
-import type { Bar } from "./bar/bar";
-import type { BarSmall } from "./bar/bar-small";
-import type { Milestone } from "./milestone/milestone";
-import type { Project } from "./project/project";
+import  { Bar } from "./bar/bar";
+import  { BarSmall } from "./bar/bar-small";
+import  { Milestone } from "./milestone/milestone";
+import  { Project } from "./project/project";
 import style from "./task-list.module.css";
 import { createEffect, on, createSignal } from "solid-js";
 

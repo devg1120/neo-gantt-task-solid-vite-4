@@ -16,6 +16,9 @@ export const Arrow: Component<ArrowProps> = ({
     arrowIndent,
     rtl,
 }) => {
+
+    //console.log(taskFrom.index);
+    //console.log(taskTo.index);
     let path: string;
     let trianglePoints: string;
     if (rtl) {
@@ -36,6 +39,7 @@ export const Arrow: Component<ArrowProps> = ({
         );
     }
 
+   //console.log("arrow path", path);
     return (
         <g class="arrow">
             <path strokeWidth="1.5" d={path} fill="none" />

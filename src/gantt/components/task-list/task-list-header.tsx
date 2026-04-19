@@ -19,6 +19,9 @@ export const TaskListHeaderDefault: Component<TaskListHeaderProps> = ({
     rowWidth,
     showFromTo,
 }) => {
+    console.log(headerHeight);
+    const height_px = String(headerHeight - 2) + "px";
+
     const headerItemStyle = {
         minWidth: rowWidth,
     };
@@ -32,7 +35,11 @@ export const TaskListHeaderDefault: Component<TaskListHeaderProps> = ({
     if (showFromTo) {
         headers.push("From", "To");
     }
+    /*
 
+						style={{ height: headerHeight - 2 }}
+		style={{ height: headerHeight - 2, color: "red", height: "68px" }}
+    */
     return (
         <div class={styles.ganttTable} style={{
             fontFamily: fontFamily,
@@ -40,7 +47,7 @@ export const TaskListHeaderDefault: Component<TaskListHeaderProps> = ({
         }}>
             <div
                 class={styles.ganttTable_Header}
-						style={{ height: headerHeight - 2 }}
+		style={{ height: height_px }}
 
             >
                 {headers.map((header, index) => (

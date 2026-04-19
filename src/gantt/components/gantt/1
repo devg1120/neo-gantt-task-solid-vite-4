@@ -72,7 +72,7 @@ export const Gantt: Component<GanttProps> = ({
     syncScrollY,
 }) => {
 
-    //console.log(tasks);
+    console.log(tasks);
     //console.log(viewMode);
     const createDefaultDates = () => {
         const today = new Date();
@@ -107,22 +107,22 @@ export const Gantt: Component<GanttProps> = ({
     let taskListRef :HTMLDivElement;
 
     //const [dateSetup, setDateSetup] = useState<DateSetup>(() => {
-    const [__dateSetup, setDateSetup] = createSignal<DateSetup>(() => {
+    const [dateSetup, setDateSetup] = createSignal<DateSetup>(() => {
         if (!tasks || tasks.length === 0) {
             return { viewMode: ViewModeEnum.Day, dates: createDefaultDates() };
         }
         const [startDate, endDate] = ganttDateRange(tasks, viewMode, preStepsCount);
         return { viewMode, dates: seedDates(startDate, endDate, viewMode) };
     });
-    const [__currentViewDate, setCurrentViewDate] = createSignal<Date | undefined>(
+    const [currentViewDate, setCurrentViewDate] = createSignal<Date | undefined>(
         undefined,
     );
 
-    const [__taskListWidth, setTaskListWidth] = createSignal(0);
-    const [__svgContainerWidth, setSvgContainerWidth] = createSignal(0);
-    const [__svgContainerHeight, setSvgContainerHeight] = createSignal(ganttHeight);
-    const [__barTasks, setBarTasks] = createSignal<BarTask[]>([]);
-    const [__ganttEvent, setGanttEvent] = createSignal<GanttEvent>({
+    const [taskListWidth, setTaskListWidth] = createSignal(0);
+    const [svgContainerWidth, setSvgContainerWidth] = createSignal(0);
+    const [svgContainerHeight, setSvgContainerHeight] = createSignal(ganttHeight);
+    const [barTasks, setBarTasks] = createSignal<BarTask[]>([]);
+    const [ganttEvent, setGanttEvent] = createSignal<GanttEvent>({
         action: "",
     });
     const taskHeight = createMemo(
@@ -130,26 +130,27 @@ export const Gantt: Component<GanttProps> = ({
         [rowHeight, barFill],
     );
 
-    const [__selectedTask, setSelectedTask] = createSignal<BarTask>();
-    const [__failedTask, setFailedTask] = createSignal<BarTask | null>(null);
+    const [selectedTask, setSelectedTask] = createSignal<BarTask>();
+    const [failedTask, setFailedTask] = createSignal<BarTask | null>(null);
 
+    //console.log(dateSetup());
 
     //const svgWidth = dateSetup.dates.length * columnWidth;
-    const svgWidth = __dateSetup()().dates.length * columnWidth;
-    const ganttFullHeight = __barTasks().length * rowHeight;
+    const svgWidth = dateSetup()().dates.length * columnWidth;
+    const ganttFullHeight = barTasks().length * rowHeight;
 
-    const [__scrollY, setScrollY] = createSignal(0);
-    const [__scrollX, setScrollX] = createSignal(-1);
+    const [scrollY, setScrollY] = createSignal(0);
+    const [scrollX, setScrollX] = createSignal(-1);
 
-    const [__syncScrollX_OLD, setSyncScrollX_OLD] = createSignal(0);
-    const [__syncScrollY_OLD, setSyncScrollY_OLD] = createSignal(0);
+    const [syncScrollX_OLD, setSyncScrollX_OLD] = createSignal(0);
+    const [syncScrollY_OLD, setSyncScrollY_OLD] = createSignal(0);
 
-    const [__ignoreScrollEvent, setIgnoreScrollEvent] = createSignal(false);
+    const [ignoreScrollEvent, setIgnoreScrollEvent] = createSignal(false);
 
-    const [__keyDownScrollEvent, setKeyDownScrollEvent] = createSignal(false);
+    const [keyDownScrollEvent, setKeyDownScrollEvent] = createSignal(false);
 
-    const [__ignoreSyncScrollXEvent, setIgnoreSyncScrollXEvent] = createSignal(false);
-    const [__ignoreSyncScrollYEvent, setIgnoreSyncScrollYEvent] = createSignal(false);
+    const [ignoreSyncScrollXEvent, setIgnoreSyncScrollXEvent] = createSignal(false);
+    const [ignoreSyncScrollYEvent, setIgnoreSyncScrollYEvent] = createSignal(false);
 
 
 
@@ -233,11 +234,11 @@ export const Gantt: Component<GanttProps> = ({
 
     createEffect(() => {
         if (
-            viewMode === __dateSetup().viewMode &&
+            viewMode === dateSetup().viewMode &&
             ((viewDate && !currentViewDate()) ||
                 (viewDate && currentViewDate()?.valueOf() !== viewDate.valueOf()))
         ) {
-            const dates = __dateSetup().dates;
+            const dates = dateSetup().dates;
             const index = dates.findIndex(
                 (d, i) =>
                     viewDate.valueOf() >= d.valueOf() &&
@@ -253,15 +254,15 @@ export const Gantt: Component<GanttProps> = ({
     }, [
         viewDate,
         columnWidth,
-        __dateSetup().dates,
-        __dateSetup().viewMode,
+        dateSetup().dates,
+        dateSetup().viewMode,
         viewMode,
-        __currentViewDate(),
+        currentViewDate(),
     ]);
 
 
     createEffect(() => {
-        const { changedTask, action } = __ganttEvent();
+        const { changedTask, action } = ganttEvent;
         if (changedTask) {
             if (action === "delete") {
                 setGanttEvent({ action: "" });
@@ -272,7 +273,7 @@ export const Gantt: Component<GanttProps> = ({
                 action === "start" ||
                 action === "progress"
             ) {
-                const prevStateTask = __barTasks().find((t) => t.id === changedTask.id);
+                const prevStateTask = barTasks().find((t) => t.id === changedTask.id);
                 if (
                     prevStateTask &&
                     (prevStateTask.start.getTime() !== changedTask.start.getTime() ||
@@ -287,18 +288,18 @@ export const Gantt: Component<GanttProps> = ({
                 }
             }
         }
-    });
+    }, [ganttEvent, barTasks()]);
 
-
+/* LOOP
     createEffect(() => {
-        if (__failedTask()) {
+        if (failedTask) {
             setBarTasks(
                 barTasks().map((t) => (t.id !== failedTask.id ? t : failedTask)),
             );
             setFailedTask(null);
         }
-    } );
-
+    }, [failedTask, barTasks]);
+*/
 
 
     createEffect(() => {
@@ -313,19 +314,17 @@ export const Gantt: Component<GanttProps> = ({
     }) ;
 
 
-
     createEffect(() => {
         //if (wrapperRef.current) {
         if (wrapperRef) {
             //setSvgContainerWidth(wrapperRef.current.offsetWidth - taskListWidth);
-            setSvgContainerWidth(wrapperRef.offsetWidth - __taskListWidth());
+            setSvgContainerWidth(wrapperRef.offsetWidth - taskListWidth());
         }
     }) ;
 
 
-
     createEffect(() => {
-        if (__barTasks().length === 0) {
+        if (barTasks().length === 0) {
             setSvgContainerHeight(headerHeight);
         } else if (ganttHeight) {
             setSvgContainerHeight(ganttHeight + headerHeight);
@@ -333,7 +332,6 @@ export const Gantt: Component<GanttProps> = ({
             setSvgContainerHeight(tasks.length * rowHeight + headerHeight);
         }
     } );
-
 
     // scroll events
     createEffect(() => {
@@ -375,23 +373,22 @@ export const Gantt: Component<GanttProps> = ({
         };
     }) ;
 
-
     createEffect(() => {
+        //console.log("scrollY")
         if (onScrollY) {
             //onScrollY(scrollY)
             onScrollY({ sid: id, num: scrollY })
         }
     }) ;
 
-
     createEffect(() => {
+        //console.log("scrollX")
         if (onScrollX) {
             //onScrollX(scrollX)
             onScrollX({ sid: id, num: scrollX })
         }
     } );
 
-/* LOOP
     createEffect(() => {
         //console.log("syncScrollX", syncScrollX)
         if (!syncScrollX) { return; }
@@ -401,7 +398,21 @@ export const Gantt: Component<GanttProps> = ({
 
         //console.log("syncScrollX_OLD", syncScrollX_OLD)
 
-        if (!__ignoreSyncScrollXEvent()) {
+        if (!ignoreSyncScrollXEvent) {
+            /*
+            if(syncScrollX){
+            //console.log("X",syncScrollX);
+            setScrollX(syncScrollX.num);
+            setIgnoreSyncScrollXEvent(false);
+            } else {
+            //console.log("X IGNORE")
+            setScrollX(syncScrollX.num);
+            if (syncScrollX_OLD != columnWidth && syncScrollX_OLD != -1) {
+            //if (syncScrollX_OLD > columnWidth) {
+              setIgnoreSyncScrollXEvent(true);
+            }
+            }
+               */
             if (syncScrollX) {
                 setScrollX(syncScrollX.num);
                 setIgnoreSyncScrollXEvent(true);
@@ -411,8 +422,7 @@ export const Gantt: Component<GanttProps> = ({
         }
 
     });
-*/
-/*  LOOP
+
     createEffect(() => {
         //console.log("syncScrollY")
         if (!syncScrollY) { return; }
@@ -422,7 +432,22 @@ export const Gantt: Component<GanttProps> = ({
 
         //console.log("syncScrollY_OLD", syncScrollY_OLD)
 
-        if (!__ignoreSyncScrollYEvent()) {
+        if (!ignoreSyncScrollYEvent) {
+            /*
+            if(syncScrollY){
+            //console.log("Y")
+            setScrollY(syncScrollY.num);
+            setIgnoreSyncScrollYEvent(false);
+            } else {
+            //console.log("Y IGNORE")
+            setScrollY(syncScrollY.num);
+            //if (syncScrollY_OLD != rowHeight && syncScrollY_OLD != -1 && syncScrollY_OLD != 0) {
+            if (syncScrollY_OLD > rowHeight ) {
+              setIgnoreSyncScrollYEvent(true);
+            }
+            }
+              setIgnoreSyncScrollYEvent(false);
+              */
             if (syncScrollY) {
                 setScrollY(syncScrollY.num);
                 setIgnoreSyncScrollYEvent(true);
@@ -432,12 +457,12 @@ export const Gantt: Component<GanttProps> = ({
             setIgnoreSyncScrollYEvent(false);
         }
 
-    });
-*/
-   /* LOOP
-    createEffect(() => {
+    };
+
+    /*
+    useEffect(() => {
         console.log("syncScrollY")
-        if (!__ignoreSyncScrollYEvent()) {
+        if (!ignoreSyncScrollYEvent) {
             if(syncScrollY){
             console.log("Y")
             setScrollY(syncScrollY);
@@ -451,10 +476,8 @@ export const Gantt: Component<GanttProps> = ({
             }
         }
         	
-    } );
-
+    }, [syncScrollY]);
 */
-
 
     const test = () => {
         console.log("test==============")
@@ -553,20 +576,18 @@ export const Gantt: Component<GanttProps> = ({
             onExpanderClick({ ...task, hideChildren: !task.hideChildren });
         }
     };
-     
     const gridProps: GridProps = {
         columnWidth,
         svgWidth,
         tasks: tasks,
         rowHeight,
         //dates: dateSetup.dates,
-        dates: __dateSetup()().dates,  //GUSA
+        dates: dateSetup()().dates,  //GUSA
         todayColor,
         rtl,
     };
-    
     const calendarProps: CalendarProps = {
-        __dateSetup,
+        dateSetup,
         locale,
         viewMode,
         headerHeight,
@@ -576,13 +597,12 @@ export const Gantt: Component<GanttProps> = ({
         rtl,
         showDayOfWeek,
     };
-
     const barProps: TaskGanttContentProps = {
-        tasks: __barTasks,
+        tasks: barTasks,
         //dates: dateSetup.dates,
-        dates: __dateSetup()().dates,
-        __ganttEvent,
-        __selectedTask,
+        dates: dateSetup()().dates,
+        ganttEvent,
+        selectedTask,
         rowHeight,
         taskHeight,
         columnWidth,
@@ -610,13 +630,13 @@ export const Gantt: Component<GanttProps> = ({
         rowWidth: listCellWidth,
         fontFamily,
         fontSize,
-        tasks: __barTasks,
+        tasks: barTasks,
         locale,
         headerHeight,
         scrollY,
         ganttHeight,
         horizontalContainerClass: styles.horizontalContainer,
-        __selectedTask,
+        selectedTask,
         taskListRef,
         setSelectedTask: handleSelectedTask,
         onExpanderClick: handleExpanderClick,
@@ -628,7 +648,6 @@ export const Gantt: Component<GanttProps> = ({
     if (tasks.length === 0) {
         return null;
     }
-   
 
     return (
         <div>
@@ -649,7 +668,7 @@ export const Gantt: Component<GanttProps> = ({
                     scrollY={scrollY}
                     scrollX={scrollX}
                 />
-                {__ganttEvent().changedTask && (
+                {ganttEvent.changedTask && (
                     <Tooltip
                         arrowIndent={arrowIndent}
                         rowHeight={rowHeight}
@@ -661,7 +680,7 @@ export const Gantt: Component<GanttProps> = ({
                         scrollY={scrollY}
                         task={ganttEvent.changedTask}
                         headerHeight={headerHeight}
-                        taskListWidth={__taskListWidth()}
+                        taskListWidth={taskListWidth}
                         TooltipContent={TooltipContent}
                         rtl={rtl}
                         svgWidth={svgWidth}
@@ -678,7 +697,7 @@ export const Gantt: Component<GanttProps> = ({
             </div>
             <HorizontalScroll
                 svgWidth={svgWidth}
-                taskListWidth={__taskListWidth()}
+                taskListWidth={taskListWidth}
                 scroll={scrollX}
                 rtl={rtl}
                 onScroll={handleScrollX}
