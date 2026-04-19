@@ -19,7 +19,6 @@ export const TaskListHeaderDefault: Component<TaskListHeaderProps> = ({
     rowWidth,
     showFromTo,
 }) => {
-    console.log(headerHeight);
     const height_px = String(headerHeight - 2) + "px";
 
     const headerItemStyle = {

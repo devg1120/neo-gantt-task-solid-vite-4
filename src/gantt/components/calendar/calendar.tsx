@@ -450,7 +450,6 @@ export const Calendar: Component<CalendarProps> = ({
             [topValues, bottomValues] = getCalendarValuesForWeek();
             break;
         case ViewModeEnum.Day:
-	     console.log("Day");
             [topValues, midValues, bottomValues] = getCalendarValuesForDay();
             break;
         case ViewModeEnum.QuarterDay:
