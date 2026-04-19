@@ -246,7 +246,7 @@ console.log(
         }
         // Mouse Events
         else if (action === "mouseenter") {
-            if (!ganttEvent.action) {
+            if (!__ganttEvent().action) {
                 setGanttEvent({
                     action,
                     changedTask: task,
@@ -254,7 +254,7 @@ console.log(
                 });
             }
         } else if (action === "mouseleave") {
-            if (ganttEvent.action === "mouseenter") {
+            if (__ganttEvent().action === "mouseenter") {
                 setGanttEvent({ action: "" });
             }
         } else if (action === "dblclick") {
