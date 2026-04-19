@@ -35,6 +35,18 @@ export const TaskItem: Component<TaskItemProps> = (props) => {
     } = {
         ...props,
     };
+
+/*
+     console.log(
+        task,
+        //arrowIndent,
+        //isDelete,
+        //taskHeight,
+        //isSelected,
+        //rtl
+	);
+*/
+
     //const textRef = useRef<SVGTextElement>(null);
     let textRef :SVGTextElement;
     const [taskItem, setTaskItem] = createSignal<JSX.Element>(<div />);
@@ -63,9 +75,9 @@ export const TaskItem: Component<TaskItemProps> = (props) => {
     createEffect(on(
         () => [textRef, task],
         () => {
-            if (textRef.current) {
+            if (textRef) {
                 setIsTextInside(
-                    textRef.current.getBoundingClientRect().width < task.x2 - task.x1,
+                    textRef.getBoundingClientRect().width < task.x2 - task.x1,
                 );
             }
         }
@@ -77,10 +89,10 @@ export const TaskItem: Component<TaskItemProps> = (props) => {
         if (isTextInside()) {
             return task.x1 + width * 0.5;
         }
-        if (rtl && textRef.current) {
+        if (rtl && textRef) {
             return (
                 task.x1 -
-                textRef.current.getBBox().width -
+                textRef.getBBox().width -
                 arrowIndent * +hasChild -
                 arrowIndent * 0.2
             );
@@ -89,7 +101,41 @@ export const TaskItem: Component<TaskItemProps> = (props) => {
         }
     };
 
+//console.log(task);
+//console.log(getX(), task.y, taskHeight);
+
+//taskHeight = 20;
+
+/*
+return (
+  <circle
+                cx={getX()  }
+                cy={ 100 + taskHeight * 0.5  }
+		r="10"
+		stroke="black" 
+		/>
+)
+*/
+
+return (
+  <circle
+                cx={getX()  }
+                cy={ task.y + taskHeight * 0.5  }
+		r="10"
+		stroke="black" 
+		/>
+)
+
+
+/*
+return (
+  <circle cx="150" cy="20" r="10" stroke="black" fill="none"/>
+);
+*/
+    //console.log(getX());
+/*
     return (
+
         <g
             onKeyDown={(e) => {
                 switch (e.key) {
@@ -131,4 +177,7 @@ export const TaskItem: Component<TaskItemProps> = (props) => {
             </text>
         </g>
     );
+*/
+
+
 };

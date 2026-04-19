@@ -58,16 +58,16 @@ console.log(
     // dates,
     // __ganttEvent(),
     // selectedTask,
-    rowHeight,
-    columnWidth,
+    // rowHeight,
+    // columnWidth,
     // timeStep,
-    svg,
-    taskHeight(),
-    arrowColor,
-    arrowIndent,
+    // svg,
+    // taskHeight(),
+    // arrowColor,
+    // arrowIndent,
     // fontFamily,
-    fontSize,
-    rtl,
+    // fontSize,
+    // rtl,
     );
 
    //console.log("arrowIdent", arrowIndent);
@@ -286,15 +286,16 @@ console.log(
 
     return (
         <g class="content">
-
+{/*
             <circle cx="30" cy="20" r="10" stroke="cyan" fill="red"/>
             <circle cx="50" cy="20" r="10" stroke="black" fill="none"/>
             <circle cx="70" cy="20" r="10" stroke="red" fill="none"/>
             <circle cx="90" cy="37.32" r="10" stroke="yellow" fill="orange"/>
             <circle cx="160" cy="37.32" r="10" stroke="green" fill="green"/>
-
+*/}
             <g class="arrows" fill={arrowColor} stroke={arrowColor}>
                 {tasks().map((task) => {
+		    //console.log(task.y)
                     return task.barChildren.map((child) => {
 		        
                         return (

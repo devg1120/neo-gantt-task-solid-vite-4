@@ -172,7 +172,11 @@ const convertToBar = (
         task.progress,
         rtl,
     );
-    const y = taskYCoordinate(index, rowHeight, taskHeight);
+    //console.log(rowHeight, taskHeight());
+    const y = taskYCoordinate(index, rowHeight, taskHeight());
+
+    //console.log(x1, x2, y);
+
     const hideChildren = task.type === "project" ? task.hideChildren : undefined;
 
     const styles = {
@@ -213,12 +217,12 @@ const convertToMilestone = (
     milestoneBackgroundSelectedColor: string,
 ): BarTask => {
     const x = taskXCoordinate(task.start, dates, columnWidth);
-    const y = taskYCoordinate(index, rowHeight, taskHeight);
+    const y = taskYCoordinate(index, rowHeight, taskHeight());
 
-    const x1 = x - taskHeight * 0.5;
-    const x2 = x + taskHeight * 0.5;
+    const x1 = x - taskHeight() * 0.5;
+    const x2 = x + taskHeight() * 0.5;
 
-    const rotatedHeight = taskHeight / 1.414;
+    const rotatedHeight = taskHeight() / 1.414;
     const styles = {
         backgroundColor: milestoneBackgroundColor,
         backgroundSelectedColor: milestoneBackgroundSelectedColor,

@@ -204,6 +204,12 @@ export const Gantt: Component<GanttProps> = ({
             setSvgContainerHeight(headerHeight);
             return;
         }
+        //console.log(newBarTasks);
+
+	//for  ( const t of newBarTasks) {
+        //     console.log(t.type, t.y)
+	//}
+	
         setBarTasks(newBarTasks);
     }, [
         tasks,
