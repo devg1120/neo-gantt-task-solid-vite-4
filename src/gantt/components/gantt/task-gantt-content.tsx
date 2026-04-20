@@ -134,6 +134,7 @@ console.log(
             };
 
             const handleMouseUp = async (event: MouseEvent) => {
+/*
                 const { action, originalSelectedTask, changedTask } = __ganttEvent();
                 if (!changedTask || !point || !svg || !originalSelectedTask)
                     return;
@@ -157,7 +158,7 @@ console.log(
                     originalSelectedTask.start !== newChangedTask.start ||
                     originalSelectedTask.end !== newChangedTask.end ||
                     originalSelectedTask.progress !== newChangedTask.progress;
-
+*/
                 // remove listeners
                 svg.removeEventListener("mousemove", handleMouseMove);
                 svg.removeEventListener("mouseup", handleMouseUp);
