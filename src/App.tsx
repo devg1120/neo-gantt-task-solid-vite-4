@@ -118,7 +118,7 @@ const App = () => {
             <h3>Gantt With Unlimited Height</h3>
             <Gantt
                 id={1}
-                tasks={tasks()}
+                tasks={tasks}
                 viewMode={view()}
                 onDateChange={handleTaskChange}
                 onDelete={handleTaskDelete}
@@ -138,7 +138,7 @@ const App = () => {
             <h3>Gantt With Limited Height1</h3>
             <Gantt
                 id={2}
-                tasks={tasks()}
+                tasks={tasks}
                 viewMode={view()}
                 onDateChange={handleTaskChange}
                 onDelete={handleTaskDelete}
@@ -162,7 +162,7 @@ const App = () => {
             <h3>Gantt With Limited Height2</h3>
             <Gantt
                 id={3}
-                tasks={tasks()}
+                tasks={tasks}
                 viewMode={view()}
                 onDateChange={handleTaskChange}
                 onDelete={handleTaskDelete}
@@ -184,7 +184,6 @@ const App = () => {
                 syncScrollY={syncScrollY()}
             />
             <h3>No Tasks</h3>
-            <Gantt tasks={[]} />
 
         </div>
     );

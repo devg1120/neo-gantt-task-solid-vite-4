@@ -22,7 +22,8 @@ import type { TaskGanttContentProps } from "./task-gantt-content";
 //export const Gantt: React.FunctionComponent<GanttProps> = ({
 export const Gantt: Component<GanttProps> = ({
     id = 0,
-    tasks = [],
+    //tasks = [],
+    tasks ,
     //headerHeight = 50,
     headerHeight = 70,
     columnWidth = 60,
@@ -108,10 +109,10 @@ export const Gantt: Component<GanttProps> = ({
 
     //const [dateSetup, setDateSetup] = useState<DateSetup>(() => {
     const [__dateSetup, setDateSetup] = createSignal<DateSetup>(() => {
-        if (!tasks || tasks.length === 0) {
+        if (!tasks() || tasks().length === 0) {
             return { viewMode: ViewModeEnum.Day, dates: createDefaultDates() };
         }
-        const [startDate, endDate] = ganttDateRange(tasks, viewMode, preStepsCount);
+        const [startDate, endDate] = ganttDateRange(tasks(), viewMode, preStepsCount);
         return { viewMode, dates: seedDates(startDate, endDate, viewMode) };
     });
     const [__currentViewDate, setCurrentViewDate] = createSignal<Date | undefined>(
@@ -155,15 +156,15 @@ export const Gantt: Component<GanttProps> = ({
 
     // task change events
     createEffect(() => {
-        if (!tasks || tasks.length === 0) {
+        if (!tasks() || tasks().length === 0) {
             setSvgContainerHeight(headerHeight);
             return;
         }
         let filteredTasks: Task[];
         if (onExpanderClick) {
-            filteredTasks = removeHiddenTasks(tasks);
+            filteredTasks = removeHiddenTasks(tasks());
         } else {
-            filteredTasks = tasks;
+            filteredTasks = tasks();
         }
         filteredTasks = filteredTasks.sort(sortTasks);
         const [startDate, endDate] = ganttDateRange(
@@ -347,7 +348,7 @@ export const Gantt: Component<GanttProps> = ({
         } else if (ganttHeight) {
             setSvgContainerHeight(ganttHeight + headerHeight);
         } else {
-            setSvgContainerHeight(tasks.length * rowHeight + headerHeight);
+            setSvgContainerHeight(tasks().length * rowHeight + headerHeight);
         }
     } );
 
@@ -643,7 +644,7 @@ export const Gantt: Component<GanttProps> = ({
         showFromTo,
     };
 
-    if (tasks.length === 0) {
+    if (tasks().length === 0) {
         return null;
     }
    

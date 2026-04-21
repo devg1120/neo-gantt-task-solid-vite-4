@@ -32,7 +32,7 @@ export const GridBody: Component<GridBodyProps> = ({
             class={styles.gridRowLine}
         />,
     ];
-    for (const task of tasks) {
+    for (const task of tasks()) {
         gridRows.push(
             <rect
                 x="0"
