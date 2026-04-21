@@ -408,6 +408,7 @@ export const Gantt: Component<GanttProps> = ({
         }
     } );
 
+
 /* LOOP
     createEffect(() => {
         //console.log("syncScrollX", syncScrollX)
