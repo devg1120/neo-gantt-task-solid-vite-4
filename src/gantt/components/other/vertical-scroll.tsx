@@ -24,8 +24,8 @@ export const VerticalScroll: Component<{
         createEffect(on(
             () => [scroll],
             () => {
-                if (scrollRef.current) {
-                    scrollRef.current.scrollTop = scroll;
+                if (scrollRef) {
+                    scrollRef.scrollTop = scroll;
                 }
             }
         ));
