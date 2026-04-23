@@ -1,0 +1,14 @@
+
+=== NEW
+style={{
+    "min-width": rowWidth,
+    "max-width": rowWidth
+}}
+
+=== OLD
+style={{
+    minWidth: rowWidth,
+    maxWidth: rowWidth
+}}
+*******************************************************
+

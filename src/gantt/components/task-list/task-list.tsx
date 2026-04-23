@@ -46,6 +46,7 @@ export const TaskList: Component<TaskListProps> = ({
     //const horizontalContainerRef = useRef<HTMLDivElement>(null);
     //console.log("headerHeight", headerHeight);
     //console.log("rowHeight", rowHeight);
+    console.log("rowWidth", rowWidth);
     //rowHeight = 45;
     console.log("ganttHeight",ganttHeight)
     let horizontalContainerRef :HTMLDivElement;

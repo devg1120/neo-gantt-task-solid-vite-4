@@ -12,7 +12,8 @@ const App = () => {
     const [tasks, setTasks] = createSignal<Task[]>(initTasks());
     const [isChecked, setIsChecked] = createSignal(true);
 
-    const expandListWidth = "100px"
+    //const expandListWidth = "555px"
+    const expandListWidth = "255px"
     const [listWidth, setListWidth] = createSignal(expandListWidth);
 
 

@@ -25,6 +25,7 @@ export const TaskListHeaderDefault: Component<TaskListHeaderProps> = ({
         minWidth: rowWidth,
     };
 
+
     const headerSeparatorStyle = {
         height: headerHeight * 0.5,
         marginTop: headerHeight * 0.2,
@@ -39,6 +40,17 @@ export const TaskListHeaderDefault: Component<TaskListHeaderProps> = ({
 						style={{ height: headerHeight - 2 }}
 		style={{ height: headerHeight - 2, color: "red", height: "68px" }}
 		style={{ height: height_px }}
+
+                        <div
+                            class={styles.ganttTable_HeaderItem}
+                            style={headerItemStyle}
+                        >
+                            {header}
+                        </div>
+
+
+
+
     */
     return (
         <div class={styles.ganttTable} style={{
@@ -54,9 +66,9 @@ export const TaskListHeaderDefault: Component<TaskListHeaderProps> = ({
                     <>
                         <div
                             class={styles.ganttTable_HeaderItem}
-                            style={headerItemStyle}
+                            style={{ "min-width": rowWidth }}
                         >
-                            {header}
+                            {header} OK
                         </div>
                         {index < headers.length - 1 && (
                             <div

@@ -53,6 +53,16 @@ export const TaskListTableDefault: Component<TaskListTableProps> = ({
     const toLocaleDateString = createMemo(
         () => toLocaleDateStringFactory(locale)
     );
+/*
+                        <div
+                            class={styles.taskListCell}
+                            style={{
+                                minWidth: rowWidth,
+                                maxWidth: rowWidth
+                            }}
+                            title={task.name}
+                        >
+*/
 
     return (
         <div
@@ -78,8 +88,8 @@ export const TaskListTableDefault: Component<TaskListTableProps> = ({
                         <div
                             class={styles.taskListCell}
                             style={{
-                                minWidth: rowWidth,
-                                maxWidth: rowWidth
+                                "min-width": rowWidth,
+                                "max-width": rowWidth
                             }}
                             title={task.name}
                         >
