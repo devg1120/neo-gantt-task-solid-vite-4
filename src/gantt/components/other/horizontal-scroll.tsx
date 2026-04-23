@@ -19,8 +19,8 @@ export const HorizontalScroll: Component<{
     createEffect(on(
         () => [scroll],
         () => {
-            if (scrollRef.current) {
-                scrollRef.current.scrollLeft = scroll;
+            if (scrollRef) {
+                scrollRef.scrollLeft = scroll;
             }
         }
     ));

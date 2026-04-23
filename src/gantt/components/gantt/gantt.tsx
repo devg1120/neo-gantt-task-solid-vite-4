@@ -140,7 +140,14 @@ export const Gantt: Component<GanttProps> = ({
 
     //const svgWidth = dateSetup.dates.length * columnWidth;
     const svgWidth = __dateSetup()().dates.length * columnWidth;
-    const ganttFullHeight = __barTasks().length * rowHeight;
+
+    //const ganttFullHeight = __barTasks().length * rowHeight;
+    //console.log(">>>>>>>",__barTasks().length);
+    //console.log(">>>>>>>",ganttFullHeight, rowHeight);
+
+    const ganttFullHeight = tasks().length * rowHeight;
+    //console.log(">>>>>>>",tasks().length);
+    //console.log(">>>>>>>",ganttFullHeight, rowHeight);
 
     const [__scrollY, setScrollY] = createSignal(0);
     const [__scrollX, setScrollX] = createSignal(-1);
@@ -710,7 +717,7 @@ export const Gantt: Component<GanttProps> = ({
                     ganttFullHeight={ganttFullHeight}
                     ganttHeight={ganttHeight}
                     headerHeight={headerHeight}
-                    scroll={scrollY}
+                    scroll={__scrollY()}
                     onScroll={handleScrollY}
                     rtl={rtl}
                 />

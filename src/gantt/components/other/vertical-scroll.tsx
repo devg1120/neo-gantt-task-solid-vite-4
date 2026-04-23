@@ -17,7 +17,7 @@ export const VerticalScroll: Component<{
     rtl,
     onScroll,
 }) => {
-
+      console.log("vs", ganttHeight, ganttFullHeight, headerHeight);
         //const scrollRef = useRef<HTMLDivElement>(null);
         let scrollRef :HTMLDivElement;
 
@@ -29,20 +29,32 @@ export const VerticalScroll: Component<{
                 }
             }
         ));
+/*
+                style={{
+                    "height": ganttHeight + "px",
+                    "marginTop": headerHeight +"px",
+ 	 	    "marginLeft": rtl ? "" : "-1rem",
+                    "margin-top": headerHeight +"px",
+ 	 	    "margin-left": rtl ? "" : "-1rem",
+                }}
+
+
+*/
+ 
         return (
             <div
                 style={{
-                    height: ganttHeight,
-                    marginTop: headerHeight,
- 	 	    marginLeft: rtl ? "" : "-1rem",
+                    "height": ganttHeight + "px",
+                    "margin-top": headerHeight +"px",
+ 	 	    "margin-left": rtl ? "" : "-1rem",
                 }}
                 class={styles.scroll}
                 onScroll={onScroll}
                 ref={scrollRef}
             >
                 <div style={{
-                    height: ganttFullHeight,
-                    width: 1
+                    "height": ganttFullHeight + "px",
+                    "width": "1px"
                 }} />
             </div>
         );
