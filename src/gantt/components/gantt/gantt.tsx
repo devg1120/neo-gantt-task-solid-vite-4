@@ -178,7 +178,7 @@ export const Gantt: Component<GanttProps> = ({
         let newDates = seedDates(startDate, endDate, viewMode);
         if (rtl) {
             newDates = newDates.reverse();
-            if (scrollX === -1) {
+            if (__scrollX() === -1) {
                 setScrollX(newDates.length * columnWidth);
             }
         }
@@ -215,7 +215,9 @@ export const Gantt: Component<GanttProps> = ({
 	//}
 	
         setBarTasks(newBarTasks);
-    }, [
+    });
+/*
+    , [
         tasks,
         viewMode,
         preStepsCount,
@@ -239,7 +241,7 @@ export const Gantt: Component<GanttProps> = ({
         onExpanderClick,
         headerHeight,
     ]);
-
+*/
 
     createEffect(() => {
         if (
@@ -260,7 +262,9 @@ export const Gantt: Component<GanttProps> = ({
             setCurrentViewDate(viewDate);
             setScrollX(columnWidth * index);
         }
-    }, [
+    });
+/*
+    , [
         viewDate,
         columnWidth,
         __dateSetup().dates,
@@ -268,7 +272,7 @@ export const Gantt: Component<GanttProps> = ({
         viewMode,
         __currentViewDate(),
     ]);
-
+*/
 
     createEffect(() => {
         const { changedTask, action } = __ganttEvent();
@@ -373,7 +377,7 @@ export const Gantt: Component<GanttProps> = ({
         const handleWheel = (event: WheelEvent) => {
             if (event.shiftKey || event.deltaX) {
                 const scrollMove = event.deltaX ? event.deltaX : event.deltaY;
-                let newScrollX = scrollX + scrollMove;
+                let newScrollX = __scrollX() + scrollMove;
                 if (newScrollX < 0) {
                     newScrollX = 0;
                 } else if (newScrollX > svgWidth) {
@@ -382,13 +386,13 @@ export const Gantt: Component<GanttProps> = ({
                 setScrollX(newScrollX);
                 event.preventDefault();
             } else if (ganttHeight) {
-                let newScrollY = scrollY + event.deltaY;
+                let newScrollY = __scrollY() + event.deltaY;
                 if (newScrollY < 0) {
                     newScrollY = 0;
                 } else if (newScrollY > ganttFullHeight - ganttHeight) {
                     newScrollY = ganttFullHeight - ganttHeight;
                 }
-                if (newScrollY !== scrollY) {
+                if (newScrollY !== __scrollY()) {
                     setScrollY(newScrollY);
                     event.preventDefault();
                 }
@@ -412,7 +416,7 @@ export const Gantt: Component<GanttProps> = ({
     createEffect(() => {
         if (onScrollY) {
             //onScrollY(scrollY)
-            onScrollY({ sid: id, num: scrollY })
+            onScrollY({ sid: id, num: __scrollY() })
         }
     }) ;
 
@@ -420,12 +424,12 @@ export const Gantt: Component<GanttProps> = ({
     createEffect(() => {
         if (onScrollX) {
             //onScrollX(scrollX)
-            onScrollX({ sid: id, num: scrollX })
+            onScrollX({ sid: id, num: __scrollX() })
         }
     } );
 
 
-/* LOOP
+/*
     createEffect(() => {
         //console.log("syncScrollX", syncScrollX)
         if (!syncScrollX) { return; }
@@ -494,7 +498,7 @@ export const Gantt: Component<GanttProps> = ({
         console.log("test==============")
     }
     const handleScrollY = (event: SyntheticEvent) => {
-        if (scrollY !== event.currentTarget.scrollTop && !ignoreScrollEvent) {
+        if (__scrollY() !== event.currentTarget.scrollTop && !__ignoreScrollEvent()) {
             setScrollY(event.currentTarget.scrollTop);
             setIgnoreScrollEvent(true);
         } else {
@@ -503,7 +507,8 @@ export const Gantt: Component<GanttProps> = ({
     };
 
     const handleScrollX = (event: SyntheticEvent) => {
-        if (scrollX !== event.currentTarget.scrollLeft && !ignoreScrollEvent) {
+        if (__scrollX() !== event.currentTarget.scrollLeft && !__ignoreScrollEvent()) {
+	    console.log("sclollX", event.currentTarget.scrollLeft);
             setScrollX(event.currentTarget.scrollLeft);
             setIgnoreScrollEvent(true);
         } else {
@@ -520,8 +525,8 @@ export const Gantt: Component<GanttProps> = ({
             //return;
         }
 
-        let newScrollY = scrollY;
-        let newScrollX = scrollX;
+        let newScrollY = __scrollY();
+        let newScrollX = __scrollX();
         let isX = true;
         //console.log("keydown")
         switch (event.key) {
@@ -680,8 +685,8 @@ export const Gantt: Component<GanttProps> = ({
                     calendarProps={calendarProps}
                     barProps={barProps}
                     ganttHeight={ganttHeight}
-                    scrollY={scrollY}
-                    scrollX={scrollX}
+                    scrollY={__scrollY}
+                    scrollX={__scrollX}
                 />
                 {__ganttEvent().changedTask && (
                     <Tooltip
@@ -691,8 +696,8 @@ export const Gantt: Component<GanttProps> = ({
                         svgContainerWidth={__svgContainerWidth()}
                         fontFamily={fontFamily}
                         fontSize={fontSize}
-                        scrollX={scrollX}
-                        scrollY={scrollY}
+                        scrollX={__scrollX}
+                        scrollY={__scrollY}
                         task={__ganttEvent().changedTask}
                         headerHeight={headerHeight}
                         taskListWidth={__taskListWidth()}
@@ -713,7 +718,7 @@ export const Gantt: Component<GanttProps> = ({
             <HorizontalScroll
                 svgWidth={svgWidth}
                 taskListWidth={__taskListWidth}
-                scroll={scrollX}
+                scroll={__scrollX()}
                 rtl={rtl}
                 onScroll={handleScrollX}
             />

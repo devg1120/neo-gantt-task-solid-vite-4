@@ -79,19 +79,19 @@ export const TaskGantt: Component<TaskGanttProps> = ({
     });
 */
     createEffect(on(
-        () => [scrollY],
+        () => [scrollY()],
         () => {
             if (horizontalContainerRef) {
-                horizontalContainerRef.scrollTop = scrollY;
+                horizontalContainerRef.scrollTop = scrollY();
             }
         }
     ));
 
     createEffect(on(
-        () => [scrollX],
+        () => [scrollX()],
         () => {
             if (verticalGanttContainerRef) {
-                verticalGanttContainerRef.scrollLeft = scrollX;
+                verticalGanttContainerRef.scrollLeft = scrollX();
             }
         }
     ));
