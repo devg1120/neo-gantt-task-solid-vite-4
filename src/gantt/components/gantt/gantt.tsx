@@ -506,6 +506,7 @@ export const Gantt: Component<GanttProps> = ({
     }
     const handleScrollY = (event: SyntheticEvent) => {
         if (__scrollY() !== event.currentTarget.scrollTop && !__ignoreScrollEvent()) {
+	    console.log("sclollY", event.currentTarget.scrollTop);
             setScrollY(event.currentTarget.scrollTop);
             setIgnoreScrollEvent(true);
         } else {
@@ -659,7 +660,7 @@ export const Gantt: Component<GanttProps> = ({
         tasks: __barTasks,
         locale,
         headerHeight,
-        scrollY,
+        scrollY: __scrollY,
         ganttHeight,
         horizontalContainerClass: styles.horizontalContainer,
         __selectedTask,

@@ -51,10 +51,10 @@ export const TaskList: Component<TaskListProps> = ({
     console.log("ganttHeight",ganttHeight)
     let horizontalContainerRef :HTMLDivElement;
     createEffect(on(
-        () => [scrollY],
+        () => [scrollY()],
         () => {
-            if (horizontalContainerRef.current) {
-                horizontalContainerRef.current.scrollTop = scrollY;
+            if (horizontalContainerRef) {
+                horizontalContainerRef.scrollTop = scrollY();
             }
         }
     ));
