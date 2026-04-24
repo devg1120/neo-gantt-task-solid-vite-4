@@ -9,8 +9,6 @@ import { createSignal, createEffect } from "solid-js";
 const App = () => {
     //console.trace("App---------")
     const [view, setView] = createSignal<ViewMode>(ViewMode.Day);
-    //const [view, setView] = createSignal<ViewMode>(ViewMode.Week);
-    //const [view, setView] = createSignal<ViewMode>(ViewMode.Month);
     const [tasks, setTasks] = createSignal<Task[]>(initTasks());
     const [isChecked, setIsChecked] = createSignal(true);
 
@@ -19,13 +17,7 @@ const App = () => {
     const expandListWidth = "200px"
     const [listWidth, setListWidth] = createSignal(expandListWidth);
 
- /*   let viewMode = ViewMode.Day;
 
-    createEffect(()=> {
-        viewMode = view();
-	console.log(viewMode)
-    });
-*/
     createEffect(()=> {
          //console.log("isChecked",isChecked());
 	 if (isChecked() ) {
@@ -50,16 +42,6 @@ const App = () => {
     } else if (view() === ViewMode.Week) {
         columnWidth = 250;
     }
-
-    createEffect(()=> {
-        if (view() === ViewMode.Year) {
-            columnWidth = 350;
-        } else if (view() === ViewMode.Month) {
-            columnWidth = 300;
-        } else if (view() === ViewMode.Week) {
-            columnWidth = 250;
-        }
-    });
 
     createEffect(()=> {
 
