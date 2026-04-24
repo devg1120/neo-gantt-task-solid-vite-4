@@ -8,9 +8,9 @@ import { createSignal, createEffect } from "solid-js";
 // Init
 const App = () => {
     //console.trace("App---------")
-    const [view, setView] = createSignal<ViewMode>(ViewMode.Day);
+    //const [view, setView] = createSignal<ViewMode>(ViewMode.Day);
     //const [view, setView] = createSignal<ViewMode>(ViewMode.Week);
-    //const [view, setView] = createSignal<ViewMode>(ViewMode.Month);
+    const [view, setView] = createSignal<ViewMode>(ViewMode.Month);
     const [tasks, setTasks] = createSignal<Task[]>(initTasks());
     const [isChecked, setIsChecked] = createSignal(true);
 
