@@ -14,6 +14,9 @@ const App = () => {
     const [tasks, setTasks] = createSignal<Task[]>(initTasks());
     const [isChecked, setIsChecked] = createSignal(true);
 
+    const [key, setKey] = createSignal(0);
+
+
     //const expandListWidth = "555px"
     //const expandListWidth = "255px"
     const expandListWidth = "200px"
@@ -95,7 +98,8 @@ const App = () => {
          } else if (view() === ViewMode.Day) {
              setColumnWidth(50);
          }
-
+            setKey((k) => k + 1);
+	    console.log(key());
     });
 
 
@@ -196,6 +200,7 @@ const App = () => {
 {/*
             <h3>Gantt With Unlimited Height</h3>
             <Gantt
+	        key={key()}
                 id={1}
                 tasks={tasks}
                 viewMode={view()}
@@ -217,6 +222,7 @@ const App = () => {
             <h3>Gantt With Limited Height1</h3>
 	    
             <Gantt
+	        key={key()}
                 id={2}
                 tasks={tasks}
                 viewMode={view()}
