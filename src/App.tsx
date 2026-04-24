@@ -8,9 +8,9 @@ import { createSignal, createEffect } from "solid-js";
 // Init
 const App = () => {
     //console.trace("App---------")
-    //const [view, setView] = createSignal<ViewMode>(ViewMode.Day);
+    const [view, setView] = createSignal<ViewMode>(ViewMode.Day);
     //const [view, setView] = createSignal<ViewMode>(ViewMode.Week);
-    const [view, setView] = createSignal<ViewMode>(ViewMode.Month);
+    //const [view, setView] = createSignal<ViewMode>(ViewMode.Month);
     const [tasks, setTasks] = createSignal<Task[]>(initTasks());
     const [isChecked, setIsChecked] = createSignal(true);
 
@@ -40,26 +40,67 @@ const App = () => {
 
 
     let headerHeight = 70;
+    let rowHeight = 45;
+
+
+/*
     //let columnWidth = 65;
     let columnWidth = 50;
-    let rowHeight = 45;
     if (view() === ViewMode.Year) {
         columnWidth = 350;
     } else if (view() === ViewMode.Month) {
         columnWidth = 300;
     } else if (view() === ViewMode.Week) {
         columnWidth = 250;
+    } else if (view() === ViewMode.Day) {
+        columnWidth = 50;
     }
 
     createEffect(()=> {
+         console.log("viewMode change",view() );
+
         if (view() === ViewMode.Year) {
             columnWidth = 350;
         } else if (view() === ViewMode.Month) {
             columnWidth = 300;
         } else if (view() === ViewMode.Week) {
             columnWidth = 250;
+        } else if (view() === ViewMode.Day) {
+            columnWidth = 50;
         }
     });
+*/
+
+
+    const [ columnWidth, setColumnWidth ] = createSignal(50);
+
+    if (view() === ViewMode.Year) {
+        setColumnWidth(350);
+    } else if (view() === ViewMode.Month) {
+        setColumnWidth(300);
+    } else if (view() === ViewMode.Week) {
+        setColumnWidth(250);
+    } else if (view() === ViewMode.Day) {
+        setColumnWidth(50);
+    }
+
+    createEffect(()=> {
+         console.log("viewMode change",view() );
+         if (view() === ViewMode.Year) {
+             setColumnWidth(350);
+         } else if (view() === ViewMode.Month) {
+             setColumnWidth(300);
+         } else if (view() === ViewMode.Week) {
+             setColumnWidth(250);
+         } else if (view() === ViewMode.Day) {
+             setColumnWidth(50);
+         }
+
+    });
+
+
+
+
 
     createEffect(()=> {
 
@@ -168,7 +209,7 @@ const App = () => {
                 listCellWidth={isChecked() ? "155px" : ""3
                 //ganttHeight={300}
                 headerHeight={headerHeight}
-                columnWidth={columnWidth}
+                columnWidth={columnWidth()}
                 rowHeight={rowHeight}
                 showFromTo={showFromTo()}
             />
@@ -189,7 +230,7 @@ const App = () => {
                 listCellWidth={listWidth}
                 ganttHeight={300}
                 headerHeight={headerHeight}
-                columnWidth={columnWidth}
+                columnWidth={columnWidth()}
                 rowHeight={rowHeight}
                 showFromTo={showFromTo()}
 
@@ -215,7 +256,7 @@ const App = () => {
                 listCellWidth={listWidth}
                 ganttHeight={200}
                 headerHeight={headerHeight}
-                columnWidth={columnWidth}
+                columnWidth={columnWidth()}
                 rowHeight={rowHeight}
                 showFromTo={showFromTo()}
 
