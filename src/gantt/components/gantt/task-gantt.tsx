@@ -164,8 +164,9 @@ export const TaskGantt: Component<TaskGanttProps> = ({
                     font-family={newBarProps.fontFamily}
                     ref={ganttSVGRef}
                 >
-
-                    <title>Gantt Chart</title>
+{/*
+                    <title>Gantt Chart GS</title>
+*/}
                     <Grid {...gridProps} />
 		    {__SVG()}
 
