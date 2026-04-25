@@ -214,7 +214,7 @@ const App = () => {
                 headerHeight={headerHeight}
                 columnWidth={columnWidth()}
                 rowHeight={rowHeight}
-                showFromTo={showFromTo()}
+                showFromTo={showFromTo}
             />
 */}
             <h3>Gantt With Limited Height1</h3>
@@ -236,7 +236,7 @@ const App = () => {
                 headerHeight={headerHeight}
                 columnWidth={columnWidth()}
                 rowHeight={rowHeight}
-                showFromTo={showFromTo()}
+                showFromTo={showFromTo}
 
                 onScrollX={onScrollX}
                 onScrollY={onScrollY}
@@ -263,7 +263,7 @@ const App = () => {
                 headerHeight={headerHeight}
                 columnWidth={columnWidth()}
                 rowHeight={rowHeight}
-                showFromTo={showFromTo()}
+                showFromTo={showFromTo}
 
                 onScrollX={onScrollX}
                 onScrollY={onScrollY}

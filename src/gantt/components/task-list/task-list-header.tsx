@@ -31,10 +31,22 @@ export const TaskListHeaderDefault: Component<TaskListHeaderProps> = ({
         marginTop: headerHeight * 0.2,
     };
 
-    const headers = ["Name"];
-    if (showFromTo) {
+    let headers = ["Name"];
+    if (showFromTo()) {
         headers.push("From", "To");
     }
+
+    const [__headers, setHeaders] = createSignal([]);
+    setHeaders(headers)
+
+    createEffect(()=> {
+        let headers = ["Name"];
+        if (showFromTo()) {
+            headers.push("From", "To");
+        }
+        setHeaders(headers)
+    });
+
     /*
 
 						style={{ height: headerHeight - 2 }}
@@ -62,15 +74,15 @@ export const TaskListHeaderDefault: Component<TaskListHeaderProps> = ({
 		style={{ height: height_px }}
 
             >
-                {headers.map((header, index) => (
+                {__headers().map((header, index) => (
                     <>
                         <div
                             class={styles.ganttTable_HeaderItem}
                             style={{ "min-width": rowWidth }}
                         >
-                            {header} OK
+                            {header}
                         </div>
-                        {index < headers.length - 1 && (
+                        {index < __headers().length - 1 && (
                             <div
                                 class={styles.ganttTable_HeaderSeparator}
                                 style={headerSeparatorStyle}

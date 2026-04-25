@@ -130,7 +130,7 @@ export const TaskListTableDefault: Component<TaskListTableProps> = ({
                                 </div>
                             </div>
                         </div>
-                        {showFromTo && (
+                        {showFromTo() && (
                             <>
                                 <div
                                     class={styles.taskListCell}
