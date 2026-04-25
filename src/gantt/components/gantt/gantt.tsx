@@ -282,6 +282,10 @@ export const Gantt: Component<GanttProps> = ({
 */
 
     createEffect(() => {
+        console.log( __ganttEvent().changedTask);
+     })
+
+    createEffect(() => {
         const { changedTask, action } = __ganttEvent();
 	//console.log("effect", changedTask, action);
 

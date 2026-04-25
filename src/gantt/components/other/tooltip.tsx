@@ -39,6 +39,24 @@ export const Tooltip: Component<TooltipProps> = ({
     taskListWidth,
     TooltipContent,
 }) => {
+    console.log("tooltip ----------------------")
+
+console.log(
+    task,
+    rowHeight,
+    rtl,
+    svgContainerHeight,
+    svgContainerWidth,
+    scrollX(),
+    scrollY(),
+    arrowIndent,
+    fontSize,
+    fontFamily,
+    headerHeight,
+    taskListWidth,
+    TooltipContent,
+    );
+
     //const tooltipRef = useRef<HTMLDivElement | null>(null);
     let tooltipRef :HTMLDivElement;
     const [relatedY, setRelatedY] = createSignal(0);
@@ -58,16 +76,16 @@ export const Tooltip: Component<TooltipProps> = ({
             rtl,
         ],
         () => {
-            if (tooltipRef.current) {
-                const tooltipHeight = tooltipRef.current.offsetHeight * 1.1;
-                const tooltipWidth = tooltipRef.current.offsetWidth * 1.1;
+            if (tooltipRef) {
+                const tooltipHeight = tooltipRef.offsetHeight * 1.1;
+                const tooltipWidth = tooltipRef.offsetWidth * 1.1;
 
-                let newRelatedY = task.index * rowHeight - scrollY + headerHeight;
+                let newRelatedY = task.index * rowHeight - scrollY() + headerHeight;
                 let newRelatedX: number;
                 if (rtl) {
-                    newRelatedX = task.x1 - arrowIndent * 1.5 - tooltipWidth - scrollX;
+                    newRelatedX = task.x1 - arrowIndent * 1.5 - tooltipWidth - scrollX();
                     if (newRelatedX < 0) {
-                        newRelatedX = task.x2 + arrowIndent * 1.5 - scrollX;
+                        newRelatedX = task.x2 + arrowIndent * 1.5 - scrollX();
                     }
                     const tooltipLeftmostPoint = tooltipWidth + newRelatedX;
                     if (tooltipLeftmostPoint > svgContainerWidth) {
@@ -75,7 +93,7 @@ export const Tooltip: Component<TooltipProps> = ({
                         newRelatedY += rowHeight;
                     }
                 } else {
-                    newRelatedX = task.x2 + arrowIndent * 1.5 + taskListWidth - scrollX;
+                    newRelatedX = task.x2 + arrowIndent * 1.5 + taskListWidth - scrollX();
                     const tooltipLeftmostPoint = tooltipWidth + newRelatedX;
                     const fullChartWidth = taskListWidth + svgContainerWidth;
                     if (tooltipLeftmostPoint > fullChartWidth) {
@@ -83,7 +101,7 @@ export const Tooltip: Component<TooltipProps> = ({
                             task.x1 +
                             taskListWidth -
                             arrowIndent * 1.5 -
-                            scrollX -
+                            scrollX() -
                             tooltipWidth;
                     }
                     if (newRelatedX < taskListWidth) {
@@ -92,8 +110,8 @@ export const Tooltip: Component<TooltipProps> = ({
                     }
                 }
 
-                const tooltipLowerPoint = tooltipHeight + newRelatedY - scrollY;
-                if (tooltipLowerPoint > svgContainerHeight - scrollY) {
+                const tooltipLowerPoint = tooltipHeight + newRelatedY - scrollY();
+                if (tooltipLowerPoint > svgContainerHeight - scrollY()) {
                     newRelatedY = svgContainerHeight - tooltipHeight;
                 }
                 setRelatedY(newRelatedY);
@@ -101,7 +119,7 @@ export const Tooltip: Component<TooltipProps> = ({
             }
         }
     ));
-
+/*
     return (
         <div
             ref={tooltipRef}
@@ -111,6 +129,22 @@ export const Tooltip: Component<TooltipProps> = ({
                     : styles.tooltipDetailsContainerHidden
             }
  		style={{ left: relatedX, top: relatedY }}
+
+        >
+            <TooltipContent task={task} fontSize={fontSize} fontFamily={fontFamily} />
+        </div>
+    );
+*/
+  console.log(relatedX(), relatedY())
+    return (
+        <div
+            ref={tooltipRef}
+            class={
+                relatedX()
+                    ? styles.tooltipDetailsContainer
+                    : styles.tooltipDetailsContainerHidden
+            }
+ 		style={{ left: relatedX() + "px" , top: relatedY() + "px" }}
 
         >
             <TooltipContent task={task} fontSize={fontSize} fontFamily={fontFamily} />
@@ -128,8 +162,12 @@ export const StandardTooltipContent: Component<{
         fontSize,
         fontFamily,
     };
-    return (<></>);
-{/*
+/*
+    return (<>
+      <div>TOOLTIP</div>
+    </>); 
+*/
+/*
     return (
         <div class={styles.tooltipDefaultContainer} style={style}>
             <b style={{ get fontSize() { return fontSize + 6 } }}>{`${task.name
@@ -148,5 +186,26 @@ export const StandardTooltipContent: Component<{
             </p>
         </div>
     );
-*/}
+*/
+return (
+		<div className={styles.tooltipDefaultContainer} style={style}>
+			<b style={{ fontSize: fontSize + 6 }}>{`${
+				task.name
+			}: ${task.start.getDate()}-${
+				task.start.getMonth() + 1
+			}-${task.start.getFullYear()} - ${task.end.getDate()}-${
+				task.end.getMonth() + 1
+			}-${task.end.getFullYear()}`}</b>
+			{task.end.getTime() - task.start.getTime() !== 0 && (
+				<p className={styles.tooltipDefaultContainerParagraph}>{`Duration: ${~~(
+					(task.end.getTime() - task.start.getTime()) /
+					(1000 * 60 * 60 * 24)
+				)} day(s)`}</p>
+			)}
+
+			<p className={styles.tooltipDefaultContainerParagraph}>
+				{!!task.progress && `Progress: ${task.progress} %`}
+			</p>
+		</div>
+	);
 };
