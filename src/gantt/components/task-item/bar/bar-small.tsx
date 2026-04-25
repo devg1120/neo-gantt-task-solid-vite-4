@@ -16,13 +16,14 @@ export const BarSmall: Component<TaskItemProps> = ({
         task.y,
         task.height,
     );
+    //console.log("var small*", task.x2 - task.x1, task.height());
     return (
         <g class={styles.barWrapper} tabIndex={0}>
             <BarDisplay
                 x={task.x1}
                 y={task.y}
-                width={task.x2 - task.x1}
-                height={task.height}
+                width={task.x2 - task.x1 }
+                height={task.height()}
                 progressX={task.progressX}
                 progressWidth={task.progressWidth}
                 barCornerRadius={task.barCornerRadius}

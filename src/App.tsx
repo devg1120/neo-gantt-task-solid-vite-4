@@ -77,11 +77,12 @@ const App = () => {
     const [ columnWidth, setColumnWidth ] = createSignal(50);
 
     if (view() === ViewMode.Year) {
-        setColumnWidth(350);
+        setColumnWidth(500);
     } else if (view() === ViewMode.Month) {
-        setColumnWidth(300);
+        //setColumnWidth(300);
+        setColumnWidth(400);
     } else if (view() === ViewMode.Week) {
-        setColumnWidth(250);
+        setColumnWidth(170);
     } else if (view() === ViewMode.Day) {
         setColumnWidth(50);
     }
@@ -89,11 +90,12 @@ const App = () => {
     createEffect(()=> {
          console.log("viewMode change",view() );
          if (view() === ViewMode.Year) {
-             setColumnWidth(350);
+             setColumnWidth(500);
          } else if (view() === ViewMode.Month) {
-             setColumnWidth(300);
+             //setColumnWidth(300);
+             setColumnWidth(400);
          } else if (view() === ViewMode.Week) {
-             setColumnWidth(250);
+             setColumnWidth(170);
          } else if (view() === ViewMode.Day) {
              setColumnWidth(50);
          }

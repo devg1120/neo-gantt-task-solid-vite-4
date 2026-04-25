@@ -19,6 +19,13 @@ export const Bar: Component<TaskItemProps> = ({
         task.height(),
     );
     const handleHeight = task.height() - 2;
+    /*
+                width={task.x2 - task.x1}
+                width={task.x2 - task.x1 > 15 ? task.x2 - task.x1 : 15}
+     
+     */
+     //    console.log("bar width",task.x2 - task.x1)
+
     return (
         <g class={styles.barWrapper} tabIndex={0}>
             <BarDisplay
