@@ -1,4 +1,4 @@
-import { createSignal , createMemo,  createEffect, onMount} from 'solid-js';
+import { createSignal , createMemo,  createEffect, onMount, For} from 'solid-js';
 
 import { convertToBarTasks } from "../../helpers/bar-helper";
 import { ganttDateRange, seedDates } from "../../helpers/date-helper";
@@ -76,7 +76,7 @@ export const Gantt: Component<GanttProps> = ({
 
     //console.log(tasks);
     //console.log(viewMode);
-    console.log(ganttHeight, listCellWidth());
+    //console.log(ganttHeight, listCellWidth());
 
     const createDefaultDates = () => {
         const today = new Date();
@@ -280,10 +280,12 @@ export const Gantt: Component<GanttProps> = ({
         __currentViewDate(),
     ]);
 */
-
+/*
     createEffect(() => {
-        console.log( __ganttEvent().changedTask);
+        console.log("changeTask",  __ganttEvent().changedTask);
      })
+*/
+    const [key, setKey] = createSignal({});
 
     createEffect(() => {
         const { changedTask, action } = __ganttEvent();
@@ -299,14 +301,14 @@ export const Gantt: Component<GanttProps> = ({
                 action === "start" ||
                 action === "progress"
             ) {
-	console.log(changedTask.id, action);
+	//console.log(changedTask.id, action);
                 const prevStateTask = __barTasks().find((t) => t.id === changedTask.id);
-                console.log(prevStateTask.start.getTime());
-                console.log(prevStateTask.end.getTime());
-                console.log(prevStateTask.progress);
-                console.log(changedTask.start.getTime());
-                console.log(changedTask.end.getTime());
-                console.log(changedTask.progress);
+                //console.log(prevStateTask.start.getTime());
+                //console.log(prevStateTask.end.getTime());
+                //console.log(prevStateTask.progress);
+                //console.log(changedTask.start.getTime());
+                //console.log(changedTask.end.getTime());
+                //console.log(changedTask.progress);
 
                 if (
                     prevStateTask &&
@@ -316,6 +318,7 @@ export const Gantt: Component<GanttProps> = ({
                 ) {
                     // actions for change
                     console.log("actions for change");
+		    setKey([{}]);
                     const newTaskList = __barTasks().map((t) =>
                         t.id === changedTask.id ? changedTask : t,
                     );
@@ -352,7 +355,7 @@ export const Gantt: Component<GanttProps> = ({
 
     createEffect(() => {
             let v = listCellWidth();
-	    console.log("v",v);
+	    //console.log("v",v);
 	    if (v == "") {
             setTaskListWidth(0);
 	    } else {
@@ -700,6 +703,8 @@ export const Gantt: Component<GanttProps> = ({
                     scrollY={__scrollY}
                     scrollX={__scrollX}
                 />
+		
+
                 {__ganttEvent().changedTask && (
                     <Tooltip
                         arrowIndent={arrowIndent}
@@ -711,6 +716,7 @@ export const Gantt: Component<GanttProps> = ({
                         scrollX={__scrollX}
                         scrollY={__scrollY}
                         task={__ganttEvent().changedTask}
+                        __ganttEvent={__ganttEvent}
                         headerHeight={headerHeight}
                         taskListWidth={__taskListWidth()}
                         TooltipContent={TooltipContent}
@@ -718,6 +724,8 @@ export const Gantt: Component<GanttProps> = ({
                         svgWidth={svgWidth}
                     />
                 )}
+
+                 
                 <VerticalScroll
                     ganttFullHeight={ganttFullHeight}
                     ganttHeight={ganttHeight}

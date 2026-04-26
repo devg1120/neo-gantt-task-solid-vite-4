@@ -53,7 +53,7 @@ export const TaskGantt: Component<TaskGanttProps> = ({
 */
 
   onMount(() =>  {
-            console.log("onMount");
+            //console.log("onMount");
             //console.log("ganttSVGRef", ganttSVGRef);
             if (ganttSVGRef) {
                newBarProps = { ...barProps, svg: ganttSVGRef };

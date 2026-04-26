@@ -17,7 +17,7 @@ export const VerticalScroll: Component<{
     rtl,
     onScroll,
 }) => {
-      console.log("vs", ganttHeight, ganttFullHeight, headerHeight);
+      //console.log("vs", ganttHeight, ganttFullHeight, headerHeight);
         //const scrollRef = useRef<HTMLDivElement>(null);
         let scrollRef :HTMLDivElement;
 

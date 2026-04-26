@@ -256,7 +256,7 @@ console.log(
         }
         // Mouse Events
         else if (action === "mouseenter") {
-	    console.log("mouseenter")
+	   // console.log("mouseenter")
 
             if (!__ganttEvent().action) {
                 setGanttEvent({

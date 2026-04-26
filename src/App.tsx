@@ -23,11 +23,11 @@ const App = () => {
     const [listWidth, setListWidth] = createSignal(expandListWidth);
 
     //let viewMode = ViewMode.Day;
-
+/*
     createEffect(()=> {
 	console.log(view())
     });
-
+*/
     createEffect(()=> {
          //console.log("isChecked",isChecked());
 	 if (isChecked() ) {
@@ -36,7 +36,7 @@ const App = () => {
               setListWidth("");
 	 }
 
-         console.log(isChecked(), listWidth());
+         //console.log(isChecked(), listWidth());
 
     });
 
@@ -88,7 +88,7 @@ const App = () => {
     }
 
     createEffect(()=> {
-         console.log("viewMode change",view() );
+         //console.log("viewMode change",view() );
          if (view() === ViewMode.Year) {
              setColumnWidth(500);
          } else if (view() === ViewMode.Month) {
@@ -105,15 +105,15 @@ const App = () => {
 
 
 
-
+/*
     createEffect(()=> {
 
 	console.log("update", tasks());
     });
-
+*/
     const handleTaskChange = (task: Task) => {
-        console.log(`On date change Id:${task.id}`);
-        console.log(task);
+        //console.log(`On date change Id:${task.id}`);
+        //console.log(task);
         let newTasks = tasks().map((t) => (t.id === task.id ? task : t));
         if (task.project) {
             const [start, end] = getStartEndDateForProject(newTasks, task.project);
@@ -143,7 +143,7 @@ const App = () => {
 
     const handleProgressChange = async (task: Task) => {
         setTasks(tasks().map((t) => (t.id === task.id ? task : t)));
-        console.log(`On progress change Id:${task.id}`);
+        //console.log(`On progress change Id:${task.id}`);
     };
 
     const handleDblClick = (task: Task) => {
